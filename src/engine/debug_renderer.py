@@ -1,11 +1,9 @@
-from collections.abc import Sequence
 from typing import Final
 
 import pygame
 
 from src.config import Config
 from src.engine.game_components import GameComponents
-from src.entity import Passenger
 from src.geometry.point import Point
 
 from .passenger_spawner import TravelPlansMapping
@@ -40,7 +38,6 @@ class DebugRenderer:
         self,
         screen: pygame.surface.Surface,
         is_creating_path: bool,
-        passengers: Sequence[Passenger],
         travel_plans: TravelPlansMapping,
         ms_until_next_spawn: float,
         speed: float,
@@ -53,7 +50,6 @@ class DebugRenderer:
         debug_texts = self._define_debug_texts(
             mouse_pos,
             fps,
-            passengers,
             travel_plans,
             ms_until_next_spawn=ms_until_next_spawn,
             is_creating_path=is_creating_path,
@@ -77,13 +73,13 @@ class DebugRenderer:
         self,
         mouse_pos: Point | None,
         fps: float | None,
-        passengers: Sequence[Passenger],
         travel_plans: TravelPlansMapping,
         *,
         ms_until_next_spawn: float,
         is_creating_path: bool,
         game_speed: float,
     ) -> list[str]:
+        passengers = self._components.passengers
         debug_texts: list[str] = []
         if mouse_pos:
             debug_texts.append(f"Mouse position: {mouse_pos.to_tuple()}")

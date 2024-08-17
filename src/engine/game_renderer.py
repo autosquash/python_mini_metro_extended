@@ -4,7 +4,7 @@ import pygame
 
 from src.config import Config
 from src.engine.debug_renderer import DebugRenderer
-from src.entity import Passenger, Path
+from src.entity import Path
 from src.gui.gui import get_gui_height
 
 from .game_components import GameComponents
@@ -46,12 +46,10 @@ class GameRenderer:
         for metro in self._components.metros:
             metro.draw(screen)
         self._components.gui.render(screen, self._components.status.score)
-        passengers: Sequence[Passenger] = self._components.passengers
         if showing_debug:
             self.debug_renderer.draw_debug(
                 screen,
                 is_creating_path,
-                passengers,
                 travel_plans,
                 ms_until_next_spawn,
                 game_speed,
