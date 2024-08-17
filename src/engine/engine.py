@@ -35,7 +35,6 @@ class Engine:
         "steps_allowed",
     )
 
-    _gui_height: Final = get_gui_height()
     _main_surface_height: Final = get_main_surface_height()
 
     def __init__(self) -> None:
@@ -118,7 +117,6 @@ class Engine:
     def render(self, screen: pygame.surface.Surface) -> None:
         self._game_renderer.render_game(
             screen,
-            gui_height=self._gui_height,
             main_surface_height=self._main_surface_height,
             paths=self._components.paths,
             travel_plans=self.travel_plans,

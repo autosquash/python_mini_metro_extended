@@ -5,10 +5,13 @@ import pygame
 from src.config import Config
 from src.engine.debug_renderer import DebugRenderer
 from src.entity import Passenger, Path
+from src.gui.gui import get_gui_height
 
 from .game_components import GameComponents
 from .passenger_spawner import TravelPlansMapping
 from .path_edition import EditingIntermediateStations
+
+MAIN_SURFACE_COLOR = (180, 180, 120)
 
 
 class GameRenderer:
@@ -22,7 +25,6 @@ class GameRenderer:
         self,
         screen: pygame.surface.Surface,
         *,
-        gui_height: float,
         main_surface_height: float,
         paths: Sequence[Path],
         editing_intermediate_stations: EditingIntermediateStations | None,
@@ -32,10 +34,10 @@ class GameRenderer:
         showing_debug: bool,
         game_speed: float,
     ) -> None:
-        main_surface = screen.subsurface(
-            0, gui_height, Config.screen_width, main_surface_height
-        )
-        main_surface.fill((180, 180, 120))
+        main_surface_pos = (0, get_gui_height())
+        main_surface_size = (Config.screen_width, main_surface_height)
+        main_surface = screen.subsurface(main_surface_pos, main_surface_size)
+        main_surface.fill(MAIN_SURFACE_COLOR)
         self._draw_paths(screen, paths)
         if editing_intermediate_stations:
             editing_intermediate_stations.draw(screen)
